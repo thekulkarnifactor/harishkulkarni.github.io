@@ -102,13 +102,7 @@ Right aligned columns
 | ext    | extension to be used for dest files. |
 
 
-## Links
 
-[link text](https://noworneverev.github.io/)
-
-[link with title](https://github.com/noworneverev/react-vscode-portfolio "title text!")
-
-Autoconverted link https://noworneverev.github.io/ 
 
 ## Alerts
 ::: warning
