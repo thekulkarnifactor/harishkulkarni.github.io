@@ -142,7 +142,55 @@
     f.addEventListener('click', function () { f.classList.toggle('is-flipped'); });
   });
 
-  // 8. "Got data? Let's ship." marquee
+  // 8. contact buttons — mailto: does nothing without a desktop mail app,
+  //    so offer Gmail / Outlook / mail app / copy instead.
+  var EMAIL = 'info@harishkulkarni.com';
+  var menu = $('#mailMenu');
+  if (menu) {
+    var subjEl = $('#mailSubject'), gmail = $('#mailGmail'), outlook = $('#mailOutlook'), app = $('#mailApp'), copy = $('#mailCopy');
+    var lastTrigger = null;
+    var setLinks = function (subject) {
+      var s = encodeURIComponent(subject);
+      subjEl.textContent = subject;
+      gmail.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + EMAIL + '&su=' + s;
+      outlook.href = 'https://outlook.live.com/mail/0/deeplink/compose?to=' + EMAIL + '&subject=' + s;
+      app.href = 'mailto:' + EMAIL + '?subject=' + s;
+      copy.firstChild.nodeValue = 'Copy address ';
+    };
+    var closeMenu = function () {
+      menu.hidden = true;
+      $$('.js-mail').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+      if (lastTrigger) lastTrigger.focus();
+    };
+    $$('.js-mail').forEach(function (btn) {
+      btn.setAttribute('aria-expanded', 'false');
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var subject = btn.getAttribute('data-subject') || 'Hello';
+        if (!menu.hidden && subjEl.textContent === subject) { closeMenu(); return; }
+        setLinks(subject);
+        lastTrigger = btn;
+        menu.hidden = false;
+        $$('.js-mail').forEach(function (b) { b.setAttribute('aria-expanded', b === btn ? 'true' : 'false'); });
+        gmail.focus({ preventScroll: true });
+      });
+    });
+    $('#mailClose').addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) closeMenu(); });
+    document.addEventListener('click', function (e) {
+      if (!menu.hidden && !menu.contains(e.target) && !e.target.closest('.js-mail')) closeMenu();
+    });
+    copy.addEventListener('click', function () {
+      var done = function () { copy.firstChild.nodeValue = 'Copied ✓ '; setTimeout(function () { copy.firstChild.nodeValue = 'Copy address '; }, 2000); };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(EMAIL).then(done, function () { window.prompt('Copy this address:', EMAIL); });
+      } else {
+        window.prompt('Copy this address:', EMAIL);
+      }
+    });
+  }
+
+  // 9. "Got data? Let's ship." marquee
   var ship = $('#shipTrack');
   if (ship) {
     var html = '';
