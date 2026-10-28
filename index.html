@@ -289,8 +289,17 @@
   <h2 class="sr-only">Got data? Let's ship.</h2>
   <div class="wrap">
     <div class="actions">
-      <a class="btn btn-ac btn-lg" href="mailto:info@harishkulkarni.com?subject=Project%20enquiry">info@harishkulkarni.com</a>
-      <a class="btn btn-sweep btn-outline" href="mailto:info@harishkulkarni.com?subject=Book%20a%2030-min%20call">Book a 30-min call</a>
+      <a class="btn btn-ac btn-lg js-mail" href="mailto:info@harishkulkarni.com?subject=Project%20enquiry" data-subject="Project enquiry" aria-haspopup="true" aria-controls="mailMenu">info@harishkulkarni.com</a>
+      <a class="btn btn-sweep btn-outline js-mail" href="mailto:info@harishkulkarni.com?subject=Book%20a%2030-min%20call" data-subject="Book a 30-min call" aria-haspopup="true" aria-controls="mailMenu">Book a 30-min call</a>
+    </div>
+    <div class="mail-menu" id="mailMenu" hidden>
+      <div class="mail-menu-head mono"><span>Email <strong>info@harishkulkarni.com</strong> — <span id="mailSubject">Project enquiry</span></span><button type="button" class="mail-close" id="mailClose" aria-label="Close">✕</button></div>
+      <div class="mail-opts">
+        <a class="mail-opt" id="mailGmail" href="#" target="_blank" rel="noopener">Gmail <span>↗</span></a>
+        <a class="mail-opt" id="mailOutlook" href="#" target="_blank" rel="noopener">Outlook <span>↗</span></a>
+        <a class="mail-opt" id="mailApp" href="#">Mail app <span>→</span></a>
+        <button type="button" class="mail-opt" id="mailCopy">Copy address <span>⧉</span></button>
+      </div>
     </div>
   </div>
 </section>
